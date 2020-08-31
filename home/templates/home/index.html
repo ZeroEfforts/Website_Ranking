@@ -16,7 +16,7 @@
           {{ field.label_tag }}
         </div>
         <div class="col-8" style="padding: 0px; margin: 0px">
-          {% render_field field class+="form-control" %}
+          {{ field }}
         </div>
         {% if field.help_text %}
         <p class="help">{{ field.help_text|safe }}</p>

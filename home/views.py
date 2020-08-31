@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import SearchForm
+from .models import SearchResult, SearchHistory
 from .private.gsearch import gsearch
 # Create your views here.
+
+lala=list()
 
 def index(request):
     form=SearchForm()
@@ -9,7 +12,7 @@ def index(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             data=form.save()
-            searchresult(data)
+            searchresult(request,data)
             return redirect('home:result data.id')
 
     context={
@@ -18,13 +21,18 @@ def index(request):
     return render(request, 'home/index.html', context)
 
 def result(request, pk):
-    pass
+    history=SearchHistory.objects.get(id=pk)
+    result=SearchResult.objects.get(searchhistory=history)
+    context = {
+        'total': result.totalwebsites,
+        'websites': lala
+    }
+    return render(request, 'home/result.html', context)
 
 def searchresult(request,data):
-    count, weblist=gsearch(query=data.keyword, pause=data.pause)
-    context={
-        'total':count,
-        'websites':weblist
-    }
-    print(count, weblist)
-    return render(request, 'home/result.html', context)
+    count, lala=gsearch(query=data.keyword, pause=data.pause)
+    SearchResult.objects.create(
+        searchhistory=data,
+        totalwebsites=count, 
+        websiterank=1
+    )
