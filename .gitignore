@@ -1,6 +1,9 @@
 # VSCode settings
 .vscode/
 
+# Google cookies
+/.google-cookie
+
 # Python cache
 **/__pycache__
 

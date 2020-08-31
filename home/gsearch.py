@@ -1,14 +1,12 @@
-from googlesearch import search as search
+from googlesearch import search
 
 
-def gsearch(query, tld='com', lang='en', num=100, start=0, stop=100, pause=2):
-    if pause < 2:
-        pause = 2
+def gsearch(query_, tld_='com', lang_='en', num_=100, start_=0, stop_=100, pause_=2):
+    if pause_ < 2:
+        pause_ = 2
     try:
-        s = search(query, tld='com', lang='en',
-                   num=10, start=0, stop=1, pause=2)
-        s=list(s)
-        count = len(s)
-        return count, s
+        return list(search(query=query_, tld=tld_, lang=lang_,
+                           num=num_, start=start_, stop=stop_, pause=pause_))
+
     except Exception as err:
         return err
