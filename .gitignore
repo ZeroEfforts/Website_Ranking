@@ -13,3 +13,5 @@
 
 # Database
 /db.sqlite3
+/temp.txt
+/.temp
