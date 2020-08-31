@@ -14,7 +14,6 @@ def index(request):
         if form.is_valid():
             data = form.save()
             result = searchresult(request, data)
-            print(result)
             return redirect('home:result result.id')
 
     context = {
@@ -33,7 +32,7 @@ def result(request, pk):
 
 
 def searchresult(request, data):
-    results = gsearch(query=data.keyword, pause=data.pause)
+    results = gsearch(query_=data.keyword, pause_=data.pause)
     globalres=results
     try:
         return SearchResult.objects.create(
