@@ -1,10 +1,9 @@
+import json
 from django.shortcuts import render, redirect
 from .forms import SearchForm
 from .models import SearchResult, SearchHistory
 from .gsearch import gsearch
 # Create your views here.
-
-globalres=list()
 
 
 def index(request):
@@ -13,8 +12,8 @@ def index(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             data = form.save()
-            result = searchresult(request, data)
-            return redirect('home:result result.id')
+            result, weblist = searchresult(request, data)
+            return redirect('home:result', pk=result.id, websites=weblist)
 
     context = {
         'form': form
@@ -22,23 +21,26 @@ def index(request):
     return render(request, 'home/index.html', context)
 
 
-def result(request, pk):
+def result(request, pk, websites):
     result = SearchResult.objects.get(id=pk)
     context = {
         'total': result.totalwebsites,
-        'websites': globalres
+        'websites': websites
     }
+    print(websites)
     return render(request, 'home/result.html', context)
 
 
 def searchresult(request, data):
     results = gsearch(query_=data.keyword, pause_=data.pause)
-    globalres=results
     try:
-        return SearchResult.objects.create(
-            searchhistory=data,
-            totalwebsites=len(results),
-            websiterank=1
+        return(
+            SearchResult.objects.create(
+                searchhistory=data,
+                totalwebsites=len(results),
+                websiterank=1
+            ),
+            results
         )
     except Exception as err:
         return err

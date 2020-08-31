@@ -30,7 +30,7 @@ class SearchResult(models.Model):
         verbose_name_plural = "SearchResults"
 
     def __str__(self):
-        return self.websiterank+"/"+self.totalwebsites
+        return str(self.websiterank)+"/"+str(self.totalwebsites)
 
     def get_absolute_url(self):
         return reverse("SearchResult_detail", kwargs={"pk": self.pk})
