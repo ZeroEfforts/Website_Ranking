@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SearchForm
-from ..private.gsearch import gsearch
+from .private.gsearch import gsearch
 # Create your views here.
 
 def index(request):
@@ -26,4 +26,5 @@ def searchresult(request,data):
         'total':count,
         'websites':weblist
     }
+    print(count, weblist)
     return render(request, 'home/result.html', context)
