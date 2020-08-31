@@ -1,0 +1,12 @@
+# VSCode settings
+.vscode/
+
+# Python cache
+**/__pycache__
+
+# Migrations data
+**/migrations/*
+!**/migrations/__init__.py
+
+# Database
+/db.sqlite3
