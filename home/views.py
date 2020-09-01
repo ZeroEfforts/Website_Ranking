@@ -12,7 +12,7 @@ def index(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             data = form.save()
-            result= searchresult(request, data)
+            result = searchresult(request, data)
             return redirect('home:result', pk=result.id)
 
     context = {
@@ -25,9 +25,13 @@ def result(request, pk):
     result = SearchResult.objects.get(id=pk)
     with open(".temp", "r") as fp:
         websites = json.load(fp)
+
+    indices = [i for i, s in enumerate(websites) if result.searchhistory.website in s]
+
     context = {
         'total': result.totalwebsites,
-        'websites': websites
+        'websites': websites,
+        'rank':indices[0]
     }
     print(websites)
     return render(request, 'home/result.html', context)
@@ -36,7 +40,7 @@ def result(request, pk):
 def searchresult(request, data):
     results = gsearch(query_=data.keyword, pause_=data.pause)
     with open(".temp", "w") as fp:
-        json.dump(results,fp)
+        json.dump(results, fp)
     try:
         return SearchResult.objects.create(
             searchhistory=data,
@@ -46,4 +50,3 @@ def searchresult(request, data):
 
     except Exception as err:
         return err
-

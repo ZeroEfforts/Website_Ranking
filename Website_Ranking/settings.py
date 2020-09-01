@@ -26,7 +26,7 @@ SECRET_KEY = 'k5)kt65k7sucps7i81jc#xo6yc$zi24y$a0=8=!s%r+8jc=d2q'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
+    '127.0.0.1','*'
 ]
 
 
@@ -42,6 +42,9 @@ INSTALLED_APPS = [
 
     #my
     'home.apps.HomeConfig',
+
+    #third party
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
