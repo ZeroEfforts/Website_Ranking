@@ -15,3 +15,6 @@
 /db.sqlite3
 /temp.txt
 /.temp
+
+#virtual enviroment
+Pipfile.lock
